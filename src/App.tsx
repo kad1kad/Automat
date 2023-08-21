@@ -1,4 +1,4 @@
-import { Instrument, Song, Track } from "reactronica";
+import { Effect, Instrument, Song, Track } from "reactronica";
 import "./App.css";
 import { useState } from "react";
 
@@ -37,7 +37,27 @@ function App() {
 
     { name: "Synth", type: "synth" },
   ];
+
   const [selectedInstrument, setSelectedInstrument] = useState("");
+
+  // Effects State
+  const [delayWet, setDelayWet] = useState<number>(0.0);
+  const [reverbWet, setReverbWet] = useState<number>(0.0);
+
+  function toggleDelay(value: number) {
+    if (value === 1) {
+      setDelayWet(0);
+    } else {
+      setDelayWet(1);
+    }
+  }
+  function toggleReverb(value: number) {
+    if (value > 1) {
+      setReverbWet(0);
+    } else {
+      setReverbWet(10);
+    }
+  }
 
   return (
     <div className="px-5 w-screen h-screen bg-black text-slate-100 leading-relaxed">
@@ -46,7 +66,8 @@ function App() {
         {isPlaying ? "Stop" : "Play"}
       </button>
 
-      <div className="flex gap-2">
+      {/* Instrument Select */}
+      <section className="flex gap-2">
         {instruments.map((instrument) => (
           <p
             className="cursor-pointer"
@@ -55,7 +76,34 @@ function App() {
             {instrument.name}
           </p>
         ))}
-      </div>
+      </section>
+
+      {/* Effects */}
+      <section>
+        <div className="flex gap-1">
+          <h3>Delay</h3>
+          <input
+            type="range"
+            value={delayWet}
+            min={0}
+            max={1}
+            onClick={(e) => toggleDelay(parseInt(e.target.value))}
+            className="w-7"
+          />
+        </div>
+
+        <div className="flex gap-1">
+          <h3>Auto Wah</h3>
+          <input
+            type="range"
+            value={reverbWet}
+            min={0}
+            max={10}
+            onClick={(e) => toggleReverb(parseInt(e.target.value))}
+            className="w-7"
+          />
+        </div>
+      </section>
 
       {/* Step Grid */}
       <div className="flex flex-row gap-1 h-[80vh]">
@@ -80,6 +128,8 @@ function App() {
       <Song isPlaying={isPlaying} bpm={90}>
         <Track mute={false} steps={stepsArrayState}>
           <Instrument type={selectedInstrument} />
+          <Effect type="feedbackDelay" wet={delayWet} />
+          <Effect type="autoWah" wet={reverbWet} />
         </Track>
       </Song>
     </div>
