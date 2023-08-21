@@ -1,8 +1,10 @@
 /* App.css */
 .selected-button {
   background-color: rgb(134, 199, 151);
+  transition: all 0.3s;
 }
 
 .unselected-button {
   background-color: rgb(32, 39, 46);
+  transition: all 0.3s;
 }
