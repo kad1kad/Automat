@@ -32,15 +32,33 @@ function App() {
     setStepsArrayState(updatedStepsArray);
   }
 
+  const instruments = [
+    { name: "AM Synth", type: "amSynth" },
+
+    { name: "Synth", type: "synth" },
+  ];
+  const [selectedInstrument, setSelectedInstrument] = useState("");
+
   return (
-    <div className="px-5 w-screen h-screen">
-      <h1 className="text-xl py-2">Automat</h1>
+    <div className="px-5 w-screen h-screen bg-black text-slate-100 leading-relaxed">
+      <h1 className="text-xl py-2 ">Automat</h1>
       <button onClick={() => setIsPlaying(!isPlaying)}>
         {isPlaying ? "Stop" : "Play"}
       </button>
 
+      <div className="flex gap-2">
+        {instruments.map((instrument) => (
+          <p
+            className="cursor-pointer"
+            onClick={() => setSelectedInstrument(instrument.type)}
+          >
+            {instrument.name}
+          </p>
+        ))}
+      </div>
+
       {/* Step Grid */}
-      <div className="flex flex-row gap-1 h-[90vh]">
+      <div className="flex flex-row gap-1 h-[80vh]">
         {Array.from({ length: totalSteps }, (_, stepIndex) => (
           <div className="flex flex-col gap-1 flex-1" key={stepIndex}>
             {notes.map((note, buttonIndex) => (
@@ -52,9 +70,7 @@ function App() {
                 }`}
                 key={note}
                 onClick={() => toggleNoteSelection(stepIndex, buttonIndex)}
-              >
-                {note}
-              </button>
+              ></button>
             ))}
           </div>
         ))}
@@ -63,7 +79,7 @@ function App() {
       {/* Reactronica */}
       <Song isPlaying={isPlaying} bpm={90}>
         <Track mute={false} steps={stepsArrayState}>
-          <Instrument type="synth" />
+          <Instrument type={selectedInstrument} />
         </Track>
       </Song>
     </div>
