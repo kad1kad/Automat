@@ -8,27 +8,28 @@ function App() {
   const notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4"];
   const totalSteps: number = 8;
 
-  // Initialize stepsArrayState with individual button objects
-  const stepsArray: Array<Array<{ name: string; selected: boolean }>> =
+  const initialStepsArray: Array<Array<{ name: string; selected: boolean }>> =
     Array.from({ length: totalSteps }, () =>
       notes.map(() => ({ name: "", selected: false }))
     );
-  const [stepsArrayState, setStepsArrayState] = useState(stepsArray);
+  const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
 
-  function addNoteToSteps(
-    note: string,
-    stepIndex: number,
-    buttonIndex: number
-  ) {
-    if (note) {
-      const updatedStepsArray = [...stepsArrayState];
+  function toggleNoteSelection(stepIndex: number, buttonIndex: number) {
+    const updatedStepsArray = [...stepsArrayState];
+    const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
+
+    if (currentNoteState.selected) {
+      // Remove the note from the array
+      updatedStepsArray[stepIndex][buttonIndex] = { name: "", selected: false };
+    } else {
+      // Add the note to the array
       updatedStepsArray[stepIndex][buttonIndex] = {
-        name: note,
-        selected: !stepsArrayState[stepIndex][buttonIndex].selected,
+        name: notes[buttonIndex],
+        selected: true,
       };
-      setStepsArrayState(updatedStepsArray);
-      console.log(stepsArrayState);
     }
+
+    setStepsArrayState(updatedStepsArray);
   }
 
   return (
@@ -50,7 +51,7 @@ function App() {
                     : "unselected-button"
                 }`}
                 key={note}
-                onClick={() => addNoteToSteps(note, stepIndex, buttonIndex)}
+                onClick={() => toggleNoteSelection(stepIndex, buttonIndex)}
               >
                 {note}
               </button>
@@ -60,7 +61,6 @@ function App() {
       </div>
 
       {/* Reactronica */}
-
       <Song isPlaying={isPlaying} bpm={90}>
         <Track mute={false} steps={stepsArrayState}>
           <Instrument type="synth" />
