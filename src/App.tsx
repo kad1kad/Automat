@@ -1,36 +1,18 @@
 import { Effect, Instrument, Song, Track } from "reactronica";
 import "./App.css";
 import { useState } from "react";
+import { notes } from "./utils/scales";
+import StepsequencerGrid from "./components/StepSequencerGrid";
 
 function App() {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4"];
   const totalSteps: number = 8;
-
+  // Step Sequencer state
+  const [isPlaying, setIsPlaying] = useState(false);
   const initialStepsArray: Array<Array<{ name: string; selected: boolean }>> =
     Array.from({ length: totalSteps }, () =>
       notes.map(() => ({ name: "", selected: false }))
     );
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
-
-  function toggleNoteSelection(stepIndex: number, buttonIndex: number) {
-    const updatedStepsArray = [...stepsArrayState];
-    const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
-
-    if (currentNoteState.selected) {
-      // Remove the note from the array
-      updatedStepsArray[stepIndex][buttonIndex] = { name: "", selected: false };
-    } else {
-      // Add the note to the array
-      updatedStepsArray[stepIndex][buttonIndex] = {
-        name: notes[buttonIndex],
-        selected: true,
-      };
-    }
-
-    setStepsArrayState(updatedStepsArray);
-  }
 
   const instruments = [
     { name: "AM Synth", type: "amSynth" },
@@ -106,23 +88,11 @@ function App() {
       </section>
 
       {/* Step Grid */}
-      <div className="flex flex-row gap-1 h-[80vh]">
-        {Array.from({ length: totalSteps }, (_, stepIndex) => (
-          <div className="flex flex-col gap-1 flex-1" key={stepIndex}>
-            {notes.map((note, buttonIndex) => (
-              <button
-                className={`flex-1 rounded-md text-slate-100 ${
-                  stepsArrayState[stepIndex][buttonIndex]?.selected
-                    ? "selected-button"
-                    : "unselected-button"
-                }`}
-                key={note}
-                onClick={() => toggleNoteSelection(stepIndex, buttonIndex)}
-              ></button>
-            ))}
-          </div>
-        ))}
-      </div>
+      <StepsequencerGrid
+        setStepsArrayState={setStepsArrayState}
+        stepsArrayState={stepsArrayState}
+        totalSteps={totalSteps}
+      />
 
       {/* Reactronica */}
       <Song isPlaying={isPlaying} bpm={90}>
