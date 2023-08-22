@@ -4,6 +4,7 @@ import { useState } from "react";
 import { notes } from "./utils/scales";
 import { instruments } from "./utils/instruments";
 import StepsequencerGrid from "./components/StepSequencerGrid";
+import StepSequencerEffect from "./components/StepSequencerEffect";
 
 function App() {
   // Step Sequencer
@@ -16,68 +17,43 @@ function App() {
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
   const [selectedInstrument, setSelectedInstrument] = useState("synth");
 
-  // Effects State
-  const [delayWet, setDelayWet] = useState<number>(0.0);
-  const [reverbWet, setReverbWet] = useState<number>(0.0);
-
-  function toggleDelay(value: number) {
-    if (value === 1) {
-      setDelayWet(0);
-    } else {
-      setDelayWet(1);
-    }
-  }
-  function toggleReverb(value: number) {
-    if (value > 1) {
-      setReverbWet(0);
-    } else {
-      setReverbWet(10);
-    }
-  }
+  const [fxWet, setFxWet] = useState(0);
 
   return (
-    <div className="px-5 w-screen h-screen bg-black text-slate-100 leading-relaxed">
-      <h1 className="text-xl py-2 ">Automat</h1>
-      <button onClick={() => setIsPlaying(!isPlaying)}>
+    <div className="px-5 w-screen h-screen bg-black text-slate-100 leading-relaxed tracking-wider">
+      <h1 className="text-3xl py-2 font-medium text-emerald-300">Aut◌mat</h1>
+
+      <button
+        className="tracking-wider"
+        onClick={() => setIsPlaying(!isPlaying)}
+      >
         {isPlaying ? "Stop" : "Play"}
       </button>
 
-      {/* Instrument Select */}
-      <section className="flex gap-2">
-        {instruments.map((instrument) => (
-          <p
-            className="cursor-pointer"
-            onClick={() => setSelectedInstrument(instrument.type)}
-          >
-            {instrument.name}
-          </p>
-        ))}
-      </section>
-
-      {/* Effects */}
-      <section>
-        <div className="flex gap-1">
-          <h3>Delay</h3>
-          <input
-            type="range"
-            value={delayWet}
-            min={0}
-            max={1}
-            onClick={(e) => toggleDelay(parseInt(e.target.value))}
-            className="w-7"
-          />
+      <section className="flex">
+        <div className="w-28">
+          <h3>Instrument</h3>
+          <h3>Effects</h3>
         </div>
+        {/* Instrument Select */}
+        <div>
+          <div className="gap-2 flex">
+            {instruments.map((instrument) => (
+              <p
+                className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
+                  selectedInstrument === instrument.type
+                    ? "text-emerald-300"
+                    : ""
+                }`}
+                onClick={() => setSelectedInstrument(instrument.type)}
+                key={instrument.type}
+              >
+                {instrument.name}
+              </p>
+            ))}
+          </div>
 
-        <div className="flex gap-1">
-          <h3>Auto Wah</h3>
-          <input
-            type="range"
-            value={reverbWet}
-            min={0}
-            max={10}
-            onClick={(e) => toggleReverb(parseInt(e.target.value))}
-            className="w-7"
-          />
+          <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
         </div>
       </section>
 
@@ -92,8 +68,7 @@ function App() {
       <Song isPlaying={isPlaying} bpm={90}>
         <Track mute={false} steps={stepsArrayState}>
           <Instrument type={selectedInstrument} />
-          <Effect type="feedbackDelay" wet={delayWet} />
-          <Effect type="autoWah" wet={reverbWet} />
+          <Effect type="feedbackDelay" wet={fxWet} />
         </Track>
       </Song>
     </div>
