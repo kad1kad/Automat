@@ -2,25 +2,19 @@ import { Effect, Instrument, Song, Track } from "reactronica";
 import "./App.css";
 import { useState } from "react";
 import { notes } from "./utils/scales";
+import { instruments } from "./utils/instruments";
 import StepsequencerGrid from "./components/StepSequencerGrid";
 
 function App() {
+  // Step Sequencer
   const totalSteps: number = 8;
-  // Step Sequencer state
   const [isPlaying, setIsPlaying] = useState(false);
   const initialStepsArray: Array<Array<{ name: string; selected: boolean }>> =
     Array.from({ length: totalSteps }, () =>
       notes.map(() => ({ name: "", selected: false }))
     );
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
-
-  const instruments = [
-    { name: "AM Synth", type: "amSynth" },
-
-    { name: "Synth", type: "synth" },
-  ];
-
-  const [selectedInstrument, setSelectedInstrument] = useState("");
+  const [selectedInstrument, setSelectedInstrument] = useState("synth");
 
   // Effects State
   const [delayWet, setDelayWet] = useState<number>(0.0);
