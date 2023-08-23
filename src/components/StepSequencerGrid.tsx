@@ -42,11 +42,14 @@ function StepsequencerGrid({
   }
 
   return (
-    <div className="flex flex-row gap-1 h-[80vh]">
-      <div className="flex flex-col">
+    <div className="flex flex-row gap-1 h-[80vh] mt-5">
+      <div className="flex flex-col gap-1">
         <div className="h-7 rounded-md">{""}</div>
         {notes.map((note) => (
-          <div className="font-light flex flex-1 rounded-md justify-center flex-col">
+          <div
+            className="font-light flex h-12 rounded-md justify-center flex-col"
+            key={note}
+          >
             <p>{note}</p>
           </div>
         ))}
@@ -64,7 +67,7 @@ function StepsequencerGrid({
 
           {notes.map((note, buttonIndex) => (
             <button
-              className={`flex-1 rounded-md text-slate-100   ${
+              className={`h-12 rounded-md text-slate-100   ${
                 stepsArrayState[stepIndex][buttonIndex]?.selected
                   ? "selected-button"
                   : "unselected-button"

@@ -5,7 +5,7 @@
 }
 
 .unselected-button {
-  background-color: rgb(32, 39, 46);
+  background-color: #20272e;
   transition: all 0.6s;
 }
 
@@ -17,4 +17,15 @@
 .currentStepSelected-button {
   background-color: rgb(128 213 244);
   transition: all 0.6s;
+}
+
+input[type="number"].custom-input {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+/* Style the input when it's focused */
+input[type="number"].custom-input:focus {
+  box-shadow: none;
 }
