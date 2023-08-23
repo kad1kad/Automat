@@ -27,7 +27,9 @@ function StepsequencerGrid({
     const updatedStepsArray = [...stepsArrayState];
     const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
 
-    if (currentNoteState.selected) {
+    console.log("currentNoteState:", currentNoteState);
+
+    if (currentNoteState?.selected) {
       // Remove the note from the array
       updatedStepsArray[stepIndex][buttonIndex] = { name: "", selected: false };
     } else {
@@ -39,8 +41,10 @@ function StepsequencerGrid({
     }
 
     setStepsArrayState(updatedStepsArray);
+    console.log("updatedStepsArray:", updatedStepsArray);
   }
 
+  console.log("stepsArrayState:", stepsArrayState);
   return (
     <div className="flex flex-row gap-1 h-[80vh] mt-5">
       <div className="flex flex-col gap-1">
@@ -58,7 +62,7 @@ function StepsequencerGrid({
         // Show Step Index above grid
         <div className="flex flex-col gap-1 flex-1" key={stepIndex}>
           <p
-            className={`rounded-md text-center font-light ${
+            className={`rounded-md h-7  text-center font-light ${
               currentStepIndex === stepIndex ? "bg-blue-500" : ""
             }`}
           >
@@ -67,7 +71,7 @@ function StepsequencerGrid({
 
           {notes.map((note, buttonIndex) => (
             <button
-              className={`h-12 rounded-md text-slate-100   ${
+              className={`h-12 rounded-md ${
                 stepsArrayState[stepIndex][buttonIndex]?.selected
                   ? "selected-button"
                   : "unselected-button"

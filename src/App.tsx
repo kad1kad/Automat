@@ -1,20 +1,25 @@
 import { Effect, Instrument, Song, Track } from "reactronica";
 import "./App.css";
 import { useState } from "react";
-import { notes } from "./utils/scales";
 import { instruments } from "./utils/instruments";
 import StepsequencerGrid from "./components/StepSequencerGrid";
 import StepSequencerEffect from "./components/StepSequencerEffect";
 
-function App() {
-  // Step Sequencer
+interface Step {
+  name: string;
+  selected: boolean;
+}
 
-  const [totalSteps, setTotalSteps] = useState(16);
+type InitialStepsArray = Array<Array<Step>>;
+
+function App() {
+  const [totalSteps, setTotalSteps] = useState(8);
   const [isPlaying, setIsPlaying] = useState(false);
-  const initialStepsArray: Array<Array<{ name: string; selected: boolean }>> =
-    Array.from({ length: totalSteps }, () =>
-      notes.map(() => ({ name: "", selected: false }))
-    );
+
+  const initialStepsArray: InitialStepsArray = Array.from(
+    { length: totalSteps },
+    () => []
+  );
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
   const [selectedInstrument, setSelectedInstrument] = useState("polySynth");
 
@@ -128,7 +133,7 @@ function App() {
         <Track
           mute={false}
           steps={stepsArrayState}
-          onStepPlay={(stepNotes, index) => {
+          onStepPlay={(_, index) => {
             console.log("Current step index:", index);
             setCurrentStepIndex(index);
           }}
