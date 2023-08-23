@@ -14,12 +14,14 @@ type StepSequencerGridProps = {
     selected: boolean;
   }[][];
   totalSteps: number;
+  currentStepIndex: number;
 };
 
 function StepsequencerGrid({
   setStepsArrayState,
   stepsArrayState,
   totalSteps,
+  currentStepIndex,
 }: StepSequencerGridProps) {
   function toggleNoteSelection(stepIndex: number, buttonIndex: number) {
     const updatedStepsArray = [...stepsArrayState];
@@ -43,12 +45,24 @@ function StepsequencerGrid({
     <div className="flex flex-row gap-1 h-[80vh]">
       {Array.from({ length: totalSteps }, (_, stepIndex) => (
         <div className="flex flex-col gap-1 flex-1" key={stepIndex}>
+          <p
+            className={`rounded-md text-center font-light ${
+              currentStepIndex === stepIndex ? "bg-blue-500" : ""
+            }`}
+          >
+            {stepIndex + 1}
+          </p>
           {notes.map((note, buttonIndex) => (
             <button
-              className={`flex-1 rounded-md text-slate-100 ${
+              className={`h-12 rounded-md text-slate-100   ${
                 stepsArrayState[stepIndex][buttonIndex]?.selected
                   ? "selected-button"
                   : "unselected-button"
+              } ${currentStepIndex === stepIndex ? "currentStep-button" : ""} ${
+                currentStepIndex === stepIndex &&
+                stepsArrayState[stepIndex][buttonIndex]?.selected
+                  ? "currentStepSelected-button"
+                  : ""
               }`}
               key={note}
               onClick={() => toggleNoteSelection(stepIndex, buttonIndex)}

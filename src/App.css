@@ -1,10 +1,20 @@
 /* App.css */
 .selected-button {
   background-color: rgb(110 231 183);
-  transition: all 0.3s;
+  transition: all 0.6s;
 }
 
 .unselected-button {
   background-color: rgb(32, 39, 46);
-  transition: all 0.3s;
+  transition: all 0.6s;
+}
+
+.currentStep-button {
+  background-color: rgb(59 130 246);
+  transition: all 0.6s;
+}
+
+.currentStepSelected-button {
+  background-color: rgb(128 213 244);
+  transition: all 0.6s;
 }

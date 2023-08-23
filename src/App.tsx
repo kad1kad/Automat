@@ -15,7 +15,9 @@ function App() {
       notes.map(() => ({ name: "", selected: false }))
     );
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
-  const [selectedInstrument, setSelectedInstrument] = useState("synth");
+  const [selectedInstrument, setSelectedInstrument] = useState("polySynth");
+
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const [fxWet, setFxWet] = useState(0);
 
@@ -62,11 +64,19 @@ function App() {
         setStepsArrayState={setStepsArrayState}
         stepsArrayState={stepsArrayState}
         totalSteps={totalSteps}
+        currentStepIndex={currentStepIndex}
       />
 
       {/* Reactronica */}
       <Song isPlaying={isPlaying} bpm={90}>
-        <Track mute={false} steps={stepsArrayState}>
+        <Track
+          mute={false}
+          steps={stepsArrayState}
+          onStepPlay={(stepNotes, index) => {
+            console.log("Current step index:", index);
+            setCurrentStepIndex(index);
+          }}
+        >
           <Instrument type={selectedInstrument} />
           <Effect type="feedbackDelay" wet={fxWet} />
         </Track>
