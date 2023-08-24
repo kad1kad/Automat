@@ -27,11 +27,9 @@ function StepsequencerGrid({
     const updatedStepsArray = [...stepsArrayState];
     const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
 
-    console.log("currentNoteState:", currentNoteState);
-
     if (currentNoteState?.selected) {
-      // Remove the note from the array
-      updatedStepsArray[stepIndex][buttonIndex] = { name: "", selected: false };
+      // Remove the selected note object without shifting other objects
+      delete updatedStepsArray[stepIndex][buttonIndex];
     } else {
       // Add the note to the array
       updatedStepsArray[stepIndex][buttonIndex] = {
@@ -40,16 +38,22 @@ function StepsequencerGrid({
       };
     }
 
+    // Check if the sub-array is empty and reset it to an empty array. This solves the problem of unwanted sounds
+    if (updatedStepsArray[stepIndex].every((item) => item === undefined)) {
+      updatedStepsArray[stepIndex] = [];
+    }
+
     setStepsArrayState(updatedStepsArray);
     console.log("updatedStepsArray:", updatedStepsArray);
   }
 
   console.log("stepsArrayState:", stepsArrayState);
   return (
-    <div className="flex flex-row gap-1 h-[80vh] mt-5">
+    <div className="flex flex-row gap-1 py-5">
       <div className="flex flex-col gap-1">
-        <div className="h-7 rounded-md">{""}</div>
+        <div className="h-7 rounded-md ">{""}</div>
         {notes.map((note) => (
+          // Side row displaying all notes
           <div
             className="font-light flex h-12 rounded-md justify-center flex-col"
             key={note}

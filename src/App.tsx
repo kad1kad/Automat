@@ -48,15 +48,8 @@ function App() {
           </h2>
         </header>
 
-        {/* Control Panel */}
+        {/* Top Control Panel */}
         <section className="bg-[#12161a] px-7 rounded-xl py-2">
-          <button
-            className="tracking-wider"
-            onClick={() => setIsPlaying(!isPlaying)}
-          >
-            {isPlaying ? "Stop" : "Play"}
-          </button>
-
           <div className="flex">
             <div className="w-28">
               <h3>Steps</h3>
@@ -127,6 +120,16 @@ function App() {
         totalSteps={totalSteps}
         currentStepIndex={currentStepIndex}
       />
+
+      {/* Bottom Control Panel */}
+      <section className="bg-[#12161a] px-7 rounded-xl py-2">
+        <button
+          className="tracking-wider"
+          onClick={() => setIsPlaying(!isPlaying)}
+        >
+          {isPlaying ? "Stop" : "Play"}
+        </button>
+      </section>
 
       {/* Reactronica */}
       <Song isPlaying={isPlaying} bpm={bpm}>
