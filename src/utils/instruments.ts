@@ -1,5 +1,7 @@
-export const instruments = [
-  { name: "Poly Synth", type: "polySynth" },
+import { InstrumentType } from "reactronica";
+
+export const instruments: { name: string; type: InstrumentType }[] = [
+  { name: "Poly Synth", type: "synth" },
   { name: "AM Synth", type: "amSynth" },
   { name: "FM Synth", type: "fmSynth" },
   { name: "Duo Synth", type: "duoSynth" },

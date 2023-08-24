@@ -1,4 +1,11 @@
-import { Effect, Instrument, Song, Track } from "reactronica";
+import {
+  Effect,
+  Instrument,
+  InstrumentType,
+  Song,
+  StepType,
+  Track,
+} from "reactronica";
 import "./App.css";
 import { useState } from "react";
 import { instruments } from "./utils/instruments";
@@ -21,7 +28,8 @@ function App() {
     () => []
   );
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
-  const [selectedInstrument, setSelectedInstrument] = useState("polySynth");
+  const [selectedInstrument, setSelectedInstrument] =
+    useState<InstrumentType>("synth");
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
@@ -34,6 +42,13 @@ function App() {
     if (!isNaN(value) && value >= 60 && value <= 160) {
       setBpm(value);
     }
+  }
+
+  // Typing for reactronica
+  function convertToStepType(stepsArrayState: InitialStepsArray): StepType[] {
+    return stepsArrayState.map((step) =>
+      step.filter((note) => note.selected).map((note) => note.name)
+    ) as StepType[];
   }
 
   return (
@@ -135,7 +150,7 @@ function App() {
       <Song isPlaying={isPlaying} bpm={bpm}>
         <Track
           mute={false}
-          steps={stepsArrayState}
+          steps={convertToStepType(stepsArrayState)}
           onStepPlay={(_, index) => {
             console.log("Current step index:", index);
             setCurrentStepIndex(index);

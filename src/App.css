@@ -1,6 +1,6 @@
 /* App.css */
 .selected-button {
-  background-color: rgb(110 231 183);
+  background-color: rgb(110, 231, 183);
   transition: all 0.6s;
 }
 
@@ -10,13 +10,44 @@
 }
 
 .currentStep-button {
-  background-color: rgb(59 130 246);
+  background-color: rgb(59, 130, 246);
   transition: all 0.6s;
 }
 
 .currentStepSelected-button {
-  background-color: rgb(128 213 244);
+  background-color: rgb(128, 213, 244);
   transition: all 0.6s;
+}
+
+/* Pulse Animation */
+@keyframes pulseCurrentStep {
+  0%,
+  100% {
+    background-color: rgb(59, 130, 246);
+  }
+  50% {
+    background-color: rgb(96, 152, 243);
+  }
+}
+
+@keyframes pulseCurrentStepSelected {
+  0%,
+  100% {
+    background-color: rgb(128, 213, 244);
+  }
+  50% {
+    background-color: rgb(164, 224, 245);
+  }
+}
+
+/* Apply the pulse animation to the buttons */
+
+.currentStep-button {
+  animation: pulseCurrentStep 1.5s infinite;
+}
+
+.currentStepSelected-button {
+  animation: pulseCurrentStepSelected 1.5s infinite;
 }
 
 input[type="number"].custom-input {
