@@ -5,7 +5,7 @@
 }
 
 .unselected-button {
-  background-color: #20272e;
+  background-color: rgb(32, 39, 46);
   transition: all 0.6s;
 }
 
