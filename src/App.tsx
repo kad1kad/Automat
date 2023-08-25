@@ -66,8 +66,6 @@ function App() {
         </header>
 
         <TopControlPanel
-          totalSteps={totalSteps}
-          setTotalSteps={setTotalSteps}
           onBpmChange={onBpmChange}
           selectedInstrument={selectedInstrument}
           setSelectedInstrument={setSelectedInstrument}

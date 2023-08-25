@@ -3,8 +3,6 @@ import { instruments } from ".././utils/instruments";
 import { InstrumentType } from "reactronica";
 
 type Props = {
-  totalSteps: number;
-  setTotalSteps: React.Dispatch<React.SetStateAction<number>>;
   onBpmChange(e: React.ChangeEvent<HTMLInputElement>): void;
   selectedInstrument: InstrumentType;
   setSelectedInstrument: React.Dispatch<React.SetStateAction<InstrumentType>>;
@@ -13,12 +11,9 @@ type Props = {
 };
 
 function TopControlPanel({
-  totalSteps,
-  setTotalSteps,
   onBpmChange,
   selectedInstrument,
   setSelectedInstrument,
-
   bpm,
   children,
 }: Props) {
@@ -26,7 +21,6 @@ function TopControlPanel({
     <section className="bg-[#12161a] px-7 rounded-xl py-2">
       <div className="flex">
         <div className="w-28">
-          <h3>Steps</h3>
           <h3>BPM</h3>
           <h3>Instrument</h3>
           <h3>Effects</h3>
@@ -34,24 +28,7 @@ function TopControlPanel({
 
         {/* Instrument Select */}
         <div>
-          <div className="flex gap-2 ">
-            <p
-              className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                totalSteps === 8 ? "text-emerald-300" : ""
-              }`}
-              onClick={() => setTotalSteps(8)}
-            >
-              8
-            </p>
-            <p
-              className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                totalSteps === 16 ? "text-emerald-300" : ""
-              }`}
-              onClick={() => setTotalSteps(16)}
-            >
-              16
-            </p>
-          </div>
+          <div className="flex gap-2 "></div>
           <div>
             <input
               type="number"
