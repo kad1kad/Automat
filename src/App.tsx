@@ -13,6 +13,8 @@ import StepsequencerGrid from "./components/StepSequencerGrid";
 
 import TopControlPanel from "./components/TopControlPanel";
 import StepSequencerEffect from "./components/StepSequencerEffect";
+import BottomControlPanel from "./components/BottomControlPanel";
+import Header from "./components/Header";
 
 interface Step {
   name: string;
@@ -56,14 +58,10 @@ function App() {
   return (
     <div className="w-screen h-screen px-5 leading-relaxed tracking-wider bg-black text-slate-100">
       <div>
-        <header className="px-7">
-          <h1 className="py-2 pb-0 text-3xl font-medium text-emerald-300">
-            Aut<span className="text-yellow-300">◌</span>mat
-          </h1>
-          <h2 className="pb-5 text-sm font-light text-yellow-300">
-            Step Sequencer and Synthesizer
-          </h2>
-        </header>
+        <Header
+          pageHeading={"Automat"}
+          pageSubHeading={"Step Sequencer and Synthesizer"}
+        />
 
         <TopControlPanel
           onBpmChange={onBpmChange}
@@ -74,7 +72,6 @@ function App() {
           <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
         </TopControlPanel>
 
-        {/* Step Grid */}
         <StepsequencerGrid
           setStepsArrayState={setStepsArrayState}
           stepsArrayState={stepsArrayState}
@@ -82,15 +79,7 @@ function App() {
           currentStepIndex={currentStepIndex}
         />
 
-        {/* Bottom Control Panel */}
-        <section className="bg-[#12161a] px-7 rounded-xl py-2">
-          <button
-            className="tracking-wider"
-            onClick={() => setIsPlaying(!isPlaying)}
-          >
-            {isPlaying ? "Stop" : "Play"}
-          </button>
-        </section>
+        <BottomControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
         {/* Reactronica */}
         <Song isPlaying={isPlaying} bpm={bpm}>
@@ -99,6 +88,7 @@ function App() {
             steps={convertToStepType(stepsArrayState)}
             onStepPlay={(_, index) => {
               console.log("Current step index:", index);
+              console.log("Current step array:", stepsArrayState);
               setCurrentStepIndex(index);
             }}
           >

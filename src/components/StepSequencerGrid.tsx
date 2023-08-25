@@ -37,14 +37,12 @@ function StepsequencerGrid({
         selected: true,
       };
     }
-
-    // Check if the sub-array is empty and reset it to an empty array. This solves the problem of unwanted sounds
+    // Check if the sub-array is empty and reset it to an empty array
     if (updatedStepsArray[stepIndex].every((item) => item === undefined)) {
       updatedStepsArray[stepIndex] = [];
     }
 
     setStepsArrayState(updatedStepsArray);
-    console.log("updatedStepsArray:", updatedStepsArray);
   }
 
   console.log("stepsArrayState:", stepsArrayState);
