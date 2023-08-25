@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { notes } from "../utils/scales";
 
 type StepSequencerGridProps = {
@@ -26,23 +25,29 @@ function StepsequencerGrid({
 }: StepSequencerGridProps) {
   function toggleNoteSelection(stepIndex: number, buttonIndex: number) {
     const updatedStepsArray = [...stepsArrayState];
-    const currentStep = updatedStepsArray[stepIndex];
+    const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
 
-    if (currentStep[buttonIndex]) {
-      currentStep[buttonIndex] = [{ name: "", selected: false }];
+    if (currentNoteState?.selected) {
+      // Remove the selected note object without shifting other objects
+      delete updatedStepsArray[stepIndex][buttonIndex];
     } else {
-      currentStep[buttonIndex] = { name: notes[buttonIndex], selected: true };
+      // Add the note to the array
+      updatedStepsArray[stepIndex][buttonIndex] = {
+        name: notes[buttonIndex],
+        selected: true,
+      };
     }
 
-    updatedStepsArray[stepIndex] = currentStep;
+    // Check if the sub-array is empty and reset it to an empty array. This solves the problem of unwanted sounds
+    if (updatedStepsArray[stepIndex].every((item) => item === undefined)) {
+      updatedStepsArray[stepIndex] = [];
+    }
+
     setStepsArrayState(updatedStepsArray);
+    console.log("updatedStepsArray:", updatedStepsArray);
   }
 
   console.log("stepsArrayState:", stepsArrayState);
-
-  useEffect(() => {
-    console.log("Updated stepsArrayState:", stepsArrayState);
-  }, [stepsArrayState]);
   return (
     <div className="flex flex-row gap-1 py-5">
       <div className="flex flex-col gap-1">
