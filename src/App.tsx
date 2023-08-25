@@ -8,8 +8,10 @@ import {
 } from "reactronica";
 import "./App.css";
 import { useState } from "react";
-import { instruments } from "./utils/instruments";
+
 import StepsequencerGrid from "./components/StepSequencerGrid";
+
+import TopControlPanel from "./components/TopControlPanel";
 import StepSequencerEffect from "./components/StepSequencerEffect";
 
 interface Step {
@@ -63,103 +65,50 @@ function App() {
           </h2>
         </header>
 
-        {/* Top Control Panel */}
+        <TopControlPanel
+          totalSteps={totalSteps}
+          setTotalSteps={setTotalSteps}
+          onBpmChange={onBpmChange}
+          selectedInstrument={selectedInstrument}
+          setSelectedInstrument={setSelectedInstrument}
+          bpm={bpm}
+        >
+          <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
+        </TopControlPanel>
+
+        {/* Step Grid */}
+        <StepsequencerGrid
+          setStepsArrayState={setStepsArrayState}
+          stepsArrayState={stepsArrayState}
+          totalSteps={totalSteps}
+          currentStepIndex={currentStepIndex}
+        />
+
+        {/* Bottom Control Panel */}
         <section className="bg-[#12161a] px-7 rounded-xl py-2">
-          <div className="flex">
-            <div className="w-28">
-              <h3>Steps</h3>
-              <h3>BPM</h3>
-              <h3>Instrument</h3>
-              <h3>Effects</h3>
-            </div>
-
-            {/* Instrument Select */}
-            <div>
-              <div className="flex gap-2 ">
-                <p
-                  className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                    totalSteps === 8 ? "text-emerald-300" : ""
-                  }`}
-                  onClick={() => setTotalSteps(8)}
-                >
-                  8
-                </p>
-                <p
-                  className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                    totalSteps === 16 ? "text-emerald-300" : ""
-                  }`}
-                  onClick={() => setTotalSteps(16)}
-                >
-                  16
-                </p>
-              </div>
-              <div>
-                <input
-                  type="number"
-                  min={60}
-                  max={160}
-                  name=""
-                  id=""
-                  value={bpm}
-                  className="custom-input"
-                  onChange={(e) => onBpmChange(e)}
-                />
-              </div>
-              <div className="flex gap-2">
-                {instruments.map((instrument) => (
-                  <p
-                    className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                      selectedInstrument === instrument.type
-                        ? "text-emerald-300"
-                        : ""
-                    }`}
-                    onClick={() => setSelectedInstrument(instrument.type)}
-                    key={instrument.type}
-                  >
-                    {instrument.name}
-                  </p>
-                ))}
-              </div>
-
-              {/* Effect */}
-              <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
-            </div>
-          </div>
+          <button
+            className="tracking-wider"
+            onClick={() => setIsPlaying(!isPlaying)}
+          >
+            {isPlaying ? "Stop" : "Play"}
+          </button>
         </section>
+
+        {/* Reactronica */}
+        <Song isPlaying={isPlaying} bpm={bpm}>
+          <Track
+            mute={false}
+            steps={convertToStepType(stepsArrayState)}
+            onStepPlay={(_, index) => {
+              console.log("Current step index:", index);
+              setCurrentStepIndex(index);
+            }}
+          >
+            <Instrument type={selectedInstrument} />
+            <Effect type="feedbackDelay" wet={fxWet} />
+          </Track>
+        </Song>
       </div>
-
-      {/* Step Grid */}
-      <StepsequencerGrid
-        setStepsArrayState={setStepsArrayState}
-        stepsArrayState={stepsArrayState}
-        totalSteps={totalSteps}
-        currentStepIndex={currentStepIndex}
-      />
-
-      {/* Bottom Control Panel */}
-      <section className="bg-[#12161a] px-7 rounded-xl py-2">
-        <button
-          className="tracking-wider"
-          onClick={() => setIsPlaying(!isPlaying)}
-        >
-          {isPlaying ? "Stop" : "Play"}
-        </button>
-      </section>
-
-      {/* Reactronica */}
-      <Song isPlaying={isPlaying} bpm={bpm}>
-        <Track
-          mute={false}
-          steps={convertToStepType(stepsArrayState)}
-          onStepPlay={(_, index) => {
-            console.log("Current step index:", index);
-            setCurrentStepIndex(index);
-          }}
-        >
-          <Instrument type={selectedInstrument} />
-          <Effect type="feedbackDelay" wet={fxWet} />
-        </Track>
-      </Song>
     </div>
   );
 }
