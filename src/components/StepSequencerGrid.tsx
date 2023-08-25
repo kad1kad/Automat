@@ -44,10 +44,10 @@ function StepsequencerGrid({
   return (
     <div className="flex flex-row gap-1 h-[80vh] mt-5">
       <div className="flex flex-col gap-1">
-        <div className="h-7 rounded-md">{""}</div>
+        <div className="rounded-md h-7">{""}</div>
         {notes.map((note) => (
           <div
-            className="font-light flex h-12 rounded-md justify-center flex-col"
+            className="flex flex-col justify-center h-12 font-light rounded-md"
             key={note}
           >
             <p>{note}</p>
@@ -56,7 +56,7 @@ function StepsequencerGrid({
       </div>
       {Array.from({ length: totalSteps }, (_, stepIndex) => (
         // Show Step Index above grid
-        <div className="flex flex-col gap-1 flex-1" key={stepIndex}>
+        <div className="flex flex-col flex-1 gap-1" key={stepIndex}>
           <p
             className={`rounded-md text-center font-light ${
               currentStepIndex === stepIndex ? "bg-blue-500" : ""

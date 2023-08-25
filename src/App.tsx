@@ -9,7 +9,7 @@ import StepSequencerEffect from "./components/StepSequencerEffect";
 function App() {
   // Step Sequencer
 
-  const [totalSteps, setTotalSteps] = useState(16);
+  const [totalSteps, setTotalSteps] = useState(8);
   const [isPlaying, setIsPlaying] = useState(false);
   const initialStepsArray: Array<Array<{ name: string; selected: boolean }>> =
     Array.from({ length: totalSteps }, () =>
@@ -32,13 +32,13 @@ function App() {
   }
 
   return (
-    <div className="px-5 w-screen h-screen bg-black text-slate-100 leading-relaxed tracking-wider">
+    <div className="w-screen h-screen px-5 leading-relaxed tracking-wider bg-black text-slate-100">
       <div>
         <header className="px-7">
-          <h1 className="pb-0 text-3xl py-2 font-medium text-emerald-300">
+          <h1 className="py-2 pb-0 text-3xl font-medium text-emerald-300">
             Aut<span className="text-yellow-300">◌</span>mat
           </h1>
-          <h2 className="text-sm pb-5 text-yellow-300 font-light">
+          <h2 className="pb-5 text-sm font-light text-yellow-300">
             Step Sequencer and Synthesizer
           </h2>
         </header>
@@ -92,7 +92,7 @@ function App() {
                   onChange={(e) => onBpmChange(e)}
                 />
               </div>
-              <div className="gap-2 flex">
+              <div className="flex gap-2">
                 {instruments.map((instrument) => (
                   <p
                     className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
@@ -131,6 +131,7 @@ function App() {
           onStepPlay={(stepNotes, index) => {
             console.log("Current step index:", index);
             setCurrentStepIndex(index);
+            console.log(stepsArrayState);
           }}
         >
           <Instrument type={selectedInstrument} />
