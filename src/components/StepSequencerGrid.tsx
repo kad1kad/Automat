@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { notes } from "../utils/scales";
 
 type StepSequencerGridProps = {
@@ -25,37 +26,31 @@ function StepsequencerGrid({
 }: StepSequencerGridProps) {
   function toggleNoteSelection(stepIndex: number, buttonIndex: number) {
     const updatedStepsArray = [...stepsArrayState];
-    const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
+    const currentStep = updatedStepsArray[stepIndex];
 
-    if (currentNoteState?.selected) {
-      // Remove the selected note object without shifting other objects
-      delete updatedStepsArray[stepIndex][buttonIndex];
+    if (currentStep[buttonIndex]) {
+      currentStep[buttonIndex] = [{ name: "", selected: false }];
     } else {
-      // Add the note to the array
-      updatedStepsArray[stepIndex][buttonIndex] = {
-        name: notes[buttonIndex],
-        selected: true,
-      };
+      currentStep[buttonIndex] = { name: notes[buttonIndex], selected: true };
     }
 
-    // Check if the sub-array is empty and reset it to an empty array. This solves the problem of unwanted sounds
-    if (updatedStepsArray[stepIndex].every((item) => item === undefined)) {
-      updatedStepsArray[stepIndex] = [];
-    }
-
+    updatedStepsArray[stepIndex] = currentStep;
     setStepsArrayState(updatedStepsArray);
-    console.log("updatedStepsArray:", updatedStepsArray);
   }
 
   console.log("stepsArrayState:", stepsArrayState);
+
+  useEffect(() => {
+    console.log("Updated stepsArrayState:", stepsArrayState);
+  }, [stepsArrayState]);
   return (
     <div className="flex flex-row gap-1 py-5">
       <div className="flex flex-col gap-1">
-        <div className="h-7 rounded-md ">{""}</div>
+        <div className="rounded-md h-7 ">{""}</div>
         {notes.map((note) => (
           // Side row displaying all notes
           <div
-            className="font-light flex h-12 rounded-md justify-center flex-col"
+            className="flex flex-col justify-center h-12 font-light rounded-md"
             key={note}
           >
             <p>{note}</p>
@@ -64,7 +59,7 @@ function StepsequencerGrid({
       </div>
       {Array.from({ length: totalSteps }, (_, stepIndex) => (
         // Show Step Index above grid
-        <div className="flex flex-col gap-1 flex-1" key={stepIndex}>
+        <div className="flex flex-col flex-1 gap-1" key={stepIndex}>
           <p
             className={`rounded-md h-7  text-center font-light ${
               currentStepIndex === stepIndex ? "bg-blue-500" : ""

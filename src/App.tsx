@@ -11,6 +11,7 @@ import { useState } from "react";
 import { instruments } from "./utils/instruments";
 import StepsequencerGrid from "./components/StepSequencerGrid";
 import StepSequencerEffect from "./components/StepSequencerEffect";
+import { notes } from "./utils/scales";
 
 interface Step {
   name: string;
@@ -20,13 +21,14 @@ interface Step {
 type InitialStepsArray = Array<Array<Step>>;
 
 function App() {
-  const [totalSteps, setTotalSteps] = useState(8);
+  const totalSteps = 8;
   const [isPlaying, setIsPlaying] = useState(false);
 
   const initialStepsArray: InitialStepsArray = Array.from(
     { length: totalSteps },
-    () => []
+    () => new Array(notes.length).fill([])
   );
+
   const [stepsArrayState, setStepsArrayState] = useState(initialStepsArray);
   const [selectedInstrument, setSelectedInstrument] =
     useState<InstrumentType>("synth");
@@ -47,18 +49,16 @@ function App() {
   // Typing for reactronica
   function convertToStepType(stepsArrayState: InitialStepsArray): StepType[] {
     return stepsArrayState.map((step) =>
-      step.filter((note) => note.selected).map((note) => note.name)
+      step.filter((note) => note !== null).map((note) => note.name)
     ) as StepType[];
   }
 
   return (
-    <div className="px-5 w-screen h-screen bg-black text-slate-100 leading-relaxed tracking-wider">
+    <div className="w-screen h-screen px-5 leading-relaxed tracking-wider bg-black text-slate-100">
       <div>
         <header className="px-7">
-          <h1 className="pb-0 text-3xl py-2 font-medium text-emerald-300">
-            Aut<span className="text-yellow-300">◌</span>mat
-          </h1>
-          <h2 className="text-sm pb-5 text-yellow-300 font-light">
+          <h1 className="py-2 pb-0 text-3xl text-emerald-300">Automat</h1>
+          <h2 className="pb-5 text-sm font-light text-yellow-300">
             Step Sequencer and Synthesizer
           </h2>
         </header>
@@ -67,7 +67,6 @@ function App() {
         <section className="bg-[#12161a] px-7 rounded-xl py-2">
           <div className="flex">
             <div className="w-28">
-              <h3>Steps</h3>
               <h3>BPM</h3>
               <h3>Instrument</h3>
               <h3>Effects</h3>
@@ -75,24 +74,6 @@ function App() {
 
             {/* Instrument Select */}
             <div>
-              <div className="flex gap-2 ">
-                <p
-                  className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                    totalSteps === 8 ? "text-emerald-300" : ""
-                  }`}
-                  onClick={() => setTotalSteps(8)}
-                >
-                  8
-                </p>
-                <p
-                  className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                    totalSteps === 16 ? "text-emerald-300" : ""
-                  }`}
-                  onClick={() => setTotalSteps(16)}
-                >
-                  16
-                </p>
-              </div>
               <div>
                 <input
                   type="number"
@@ -105,7 +86,7 @@ function App() {
                   onChange={(e) => onBpmChange(e)}
                 />
               </div>
-              <div className="gap-2 flex">
+              <div className="flex gap-2">
                 {instruments.map((instrument) => (
                   <p
                     className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
@@ -152,7 +133,6 @@ function App() {
           mute={false}
           steps={convertToStepType(stepsArrayState)}
           onStepPlay={(_, index) => {
-            console.log("Current step index:", index);
             setCurrentStepIndex(index);
           }}
         >
