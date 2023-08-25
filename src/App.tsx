@@ -24,7 +24,7 @@ interface Step {
 type InitialStepsArray = Array<Array<Step>>;
 
 function App() {
-  const [totalSteps, setTotalSteps] = useState(8);
+  const totalSteps = 8;
   const [isPlaying, setIsPlaying] = useState(false);
 
   const initialStepsArray: InitialStepsArray = Array.from(
