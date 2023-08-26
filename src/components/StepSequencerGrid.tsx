@@ -1,4 +1,5 @@
 import { notes } from "../utils/scales";
+import NoteButton from "./NoteButton";
 
 type StepSequencerGridProps = {
   setStepsArrayState: React.Dispatch<
@@ -24,25 +25,26 @@ function StepsequencerGrid({
   currentStepIndex,
 }: StepSequencerGridProps) {
   function toggleNoteSelection(stepIndex: number, buttonIndex: number) {
-    const updatedStepsArray = [...stepsArrayState];
-    const currentNoteState = stepsArrayState[stepIndex][buttonIndex];
+    const selectedNotes = [...stepsArrayState];
+    const noteAtStepBtn = stepsArrayState[stepIndex][buttonIndex];
 
-    if (currentNoteState?.selected) {
+    if (noteAtStepBtn?.selected) {
       // Remove the selected note object without shifting other objects
-      delete updatedStepsArray[stepIndex][buttonIndex];
+      delete selectedNotes[stepIndex][buttonIndex];
     } else {
       // Add the note to the array
-      updatedStepsArray[stepIndex][buttonIndex] = {
+      selectedNotes[stepIndex][buttonIndex] = {
         name: notes[buttonIndex],
         selected: true,
       };
     }
     // Check if the sub-array is empty and reset it to an empty array
-    if (updatedStepsArray[stepIndex].every((item) => item === undefined)) {
-      updatedStepsArray[stepIndex] = [];
+    if (selectedNotes[stepIndex].every((item) => item === undefined)) {
+      selectedNotes[stepIndex] = [];
     }
 
-    setStepsArrayState(updatedStepsArray);
+    // Passing notes into Reactronica Track component
+    setStepsArrayState(selectedNotes);
   }
 
   console.log("stepsArrayState:", stepsArrayState);
@@ -70,22 +72,15 @@ function StepsequencerGrid({
           >
             {stepIndex + 1}
           </p>
-
           {notes.map((note, buttonIndex) => (
-            <button
-              className={`h-12 rounded-md ${
-                stepsArrayState[stepIndex][buttonIndex]?.selected
-                  ? "selected-button"
-                  : "unselected-button"
-              } ${currentStepIndex === stepIndex ? "currentStep-button" : ""} ${
-                currentStepIndex === stepIndex &&
-                stepsArrayState[stepIndex][buttonIndex]?.selected
-                  ? "currentStepSelected-button"
-                  : ""
-              }`}
-              key={note}
-              onClick={() => toggleNoteSelection(stepIndex, buttonIndex)}
-            ></button>
+            <NoteButton
+              stepsArrayState={stepsArrayState}
+              stepIndex={stepIndex}
+              currentStepIndex={currentStepIndex}
+              toggleNoteSelection={toggleNoteSelection}
+              note={note}
+              buttonIndex={buttonIndex}
+            />
           ))}
         </div>
       ))}
