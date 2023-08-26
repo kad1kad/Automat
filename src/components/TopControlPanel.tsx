@@ -17,6 +17,12 @@ function TopControlPanel({
   bpm,
   children,
 }: Props) {
+  function handleInstrumentChange(instrument: InstrumentType) {
+    console.log("instrument clicked", instrument);
+    console.log("instrument passed", selectedInstrument);
+    setSelectedInstrument(instrument);
+  }
+
   return (
     <section className="bg-[#12161a] px-7 rounded-xl py-2">
       <div className="flex">
@@ -44,12 +50,12 @@ function TopControlPanel({
           <div className="flex gap-2">
             {instruments.map((instrument) => (
               <p
-                className={`cursor-pointer text-stone-400 hover:underline underline-offset-4 ${
-                  selectedInstrument === instrument.type
+                className={`cursor-pointer  hover:underline underline-offset-4 ${
+                  instrument.type === selectedInstrument
                     ? "text-emerald-300"
-                    : ""
+                    : "text-stone-400"
                 }`}
-                onClick={() => setSelectedInstrument(instrument.type)}
+                onClick={() => handleInstrumentChange(instrument.type)}
                 key={instrument.type}
               >
                 {instrument.name}
