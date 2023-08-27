@@ -15,6 +15,7 @@ import TopControlPanel from "./components/TopControlPanel";
 import StepSequencerEffect from "./components/StepSequencerEffect";
 import BottomControlPanel from "./components/BottomControlPanel";
 import Header from "./components/Header";
+import InstrumentSelector from "./components/InstrumentSelector";
 
 interface Step {
   name: string;
@@ -63,12 +64,13 @@ function App() {
           pageSubHeading={"Step Sequencer and Synthesizer"}
         />
 
-        <TopControlPanel
-          onBpmChange={onBpmChange}
-          selectedInstrument={selectedInstrument}
-          setSelectedInstrument={setSelectedInstrument}
-          bpm={bpm}
-        >
+        <TopControlPanel>
+          <InstrumentSelector
+            onBpmChange={onBpmChange}
+            selectedInstrument={selectedInstrument}
+            setSelectedInstrument={setSelectedInstrument}
+            bpm={bpm}
+          />
           <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
         </TopControlPanel>
 
