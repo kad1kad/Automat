@@ -20,7 +20,7 @@ function BpmAdjust({ bpm, setBpm }: Props) {
         <button className="text-xl" onClick={handleBpmAdjust}>
           –
         </button>
-        <p className="cursor-none text-emerald-300">{bpm}</p>
+        <p className="cursor-none text-emerald-300">{bpm} BPM</p>
         <button className="text-xl" onClick={handleBpmAdjust}>
           +
         </button>

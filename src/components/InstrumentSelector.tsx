@@ -20,7 +20,7 @@ function InstrumentSelector({
       <div className="flex gap-2">
         {instruments.map((instrument) => (
           <p
-            className={`cursor-pointer  hover:underline underline-offset-4 ${
+            className={`cursor-pointer  hover:underline underline-offset-4  ${
               instrument.type === selectedInstrument
                 ? "text-emerald-300"
                 : "text-stone-400"

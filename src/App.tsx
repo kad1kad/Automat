@@ -51,7 +51,7 @@ function App() {
   }
 
   return (
-    <div className="w-screen h-screen px-5 leading-relaxed tracking-wider bg-black text-slate-100">
+    <div className="h-screen px-5 mx-auto text-sm leading-relaxed tracking-wider bg-black max-w-7xl text-slate-100 md:text-[1rem]">
       <div>
         <Header
           pageHeading={"Automat"}
