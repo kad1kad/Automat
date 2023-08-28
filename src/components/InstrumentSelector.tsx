@@ -2,17 +2,13 @@ import { InstrumentType } from "reactronica";
 import { instruments } from "../utils/instruments";
 
 type Props = {
-  onBpmChange(e: React.ChangeEvent<HTMLInputElement>): void;
   selectedInstrument: InstrumentType;
   setSelectedInstrument: React.Dispatch<React.SetStateAction<InstrumentType>>;
-  bpm: number;
 };
 
 function InstrumentSelector({
-  onBpmChange,
   selectedInstrument,
   setSelectedInstrument,
-  bpm,
 }: Props) {
   function handleInstrumentChange(instrument: InstrumentType) {
     console.log("instrument clicked", instrument);
@@ -21,19 +17,6 @@ function InstrumentSelector({
   }
   return (
     <div>
-      {/* TODO: Re-code and separate BPM  */}
-      <div>
-        <input
-          type="number"
-          min={60}
-          max={160}
-          name=""
-          id=""
-          value={bpm}
-          className="custom-input"
-          onChange={(e) => onBpmChange(e)}
-        />
-      </div>
       <div className="flex gap-2">
         {instruments.map((instrument) => (
           <p

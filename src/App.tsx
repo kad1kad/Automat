@@ -16,6 +16,7 @@ import StepSequencerEffect from "./components/StepSequencerEffect";
 import BottomControlPanel from "./components/BottomControlPanel";
 import Header from "./components/Header";
 import InstrumentSelector from "./components/InstrumentSelector";
+import BpmAdjust from "./components/BpmAdjust";
 
 interface Step {
   name: string;
@@ -42,13 +43,6 @@ function App() {
 
   const [bpm, setBpm] = useState(80);
 
-  function onBpmChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value >= 60 && value <= 160) {
-      setBpm(value);
-    }
-  }
-
   // Typing for reactronica
   function convertToStepType(stepsArrayState: InitialStepsArray): StepType[] {
     return stepsArrayState.map((step) =>
@@ -65,11 +59,10 @@ function App() {
         />
 
         <TopControlPanel>
+          <BpmAdjust bpm={bpm} setBpm={setBpm} />
           <InstrumentSelector
-            onBpmChange={onBpmChange}
             selectedInstrument={selectedInstrument}
             setSelectedInstrument={setSelectedInstrument}
-            bpm={bpm}
           />
           <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
         </TopControlPanel>
