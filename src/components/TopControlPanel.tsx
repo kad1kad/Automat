@@ -12,9 +12,10 @@ function TopControlPanel({ children }: Props) {
           <h3>Effects</h3>
         </div>
 
-        {/* Instrument Select */}
         <div>
-          {/* Effect */}
+          {/* <BpmAdjust /> */}
+          {/* <InstrumentSelector /> */}
+          {/* <StepSequencerEffect /> */}
 
           {children}
         </div>

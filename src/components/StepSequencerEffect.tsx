@@ -12,6 +12,7 @@ function Effect({ fxWet, setFxWet }: Props) {
   }
 
   return (
+    // TODO: Refactor to allow multiple effects processing
     <div className="flex gap-4">
       <div className="flex items-center gap-1">
         <p>Delay</p>
