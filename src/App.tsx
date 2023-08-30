@@ -10,7 +10,6 @@ import "./App.css";
 import { useState } from "react";
 
 import StepsequencerGrid from "./components/StepSequencerGrid";
-
 import TopControlPanel from "./components/TopControlPanel";
 import StepSequencerEffect from "./components/StepSequencerEffect";
 import BottomControlPanel from "./components/BottomControlPanel";
