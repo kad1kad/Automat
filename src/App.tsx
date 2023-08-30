@@ -17,6 +17,7 @@ import BottomControlPanel from "./components/BottomControlPanel";
 import Header from "./components/Header";
 import InstrumentSelector from "./components/InstrumentSelector";
 import BpmAdjust from "./components/BpmAdjust";
+import { effects } from "./utils/effects";
 
 interface Step {
   name: string;
@@ -24,6 +25,8 @@ interface Step {
 }
 
 type InitialStepsArray = Array<Array<Step>>;
+
+export type EffectName = "Delay" | "Auto Wah";
 
 function App() {
   const totalSteps = 8;
@@ -39,7 +42,8 @@ function App() {
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const [fxWet, setFxWet] = useState(0);
+  const [delayWet, setDelayWet] = useState(0);
+  const [autoWahWet, setAutoWahWet] = useState(0);
 
   const [bpm, setBpm] = useState(80);
 
@@ -64,7 +68,26 @@ function App() {
             selectedInstrument={selectedInstrument}
             setSelectedInstrument={setSelectedInstrument}
           />
-          <StepSequencerEffect fxWet={fxWet} setFxWet={setFxWet} />
+          {effects.map((effect) => {
+            const effectMap = {
+              Delay: { value: delayWet, setValue: setDelayWet },
+              "Auto Wah": { value: autoWahWet, setValue: setAutoWahWet },
+            };
+
+            return (
+              <StepSequencerEffect
+                wetValue={
+                  effectMap[effect.name as keyof typeof effectMap].value
+                }
+                setWetValue={
+                  effectMap[effect.name as keyof typeof effectMap].setValue
+                }
+                name={effect.name}
+                minValue={effect.minValue}
+                maxValue={effect.maxValue}
+              />
+            );
+          })}
         </TopControlPanel>
 
         <StepsequencerGrid
@@ -88,7 +111,16 @@ function App() {
             }}
           >
             <Instrument type={selectedInstrument} />
-            <Effect type="feedbackDelay" wet={fxWet} />
+            {effects.map((effect) => {
+              const effectValues: Record<EffectName, number> = {
+                Delay: delayWet,
+                "Auto Wah": autoWahWet,
+              };
+
+              return (
+                <Effect type={effect.type} wet={effectValues[effect.name]} />
+              );
+            })}
           </Track>
         </Song>
       </div>
