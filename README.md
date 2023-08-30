@@ -1,4 +1,6 @@
-# Automat: Step Sequencer and Synthesizer Web App
+# Automat
+
+## Step Sequencer and Synthesizer Web App
 
 Automat is a step sequencer and synthesizer built using React and Reactronica. It provides a user interface to design music sequences with various instruments and effects.
 
@@ -17,12 +19,12 @@ Reactronica
 Tailwind CSS
 AWS Amplify
 
-##Installation
+## Installation
 
 ### Clone this repository
 
 ```
-git clone [repository_link]
+git clone https://github.com/kad1kad/Automat.git
 ```
 
 ### Navigate to the repository
@@ -37,8 +39,8 @@ cd [repository_name]
 npm install
 ```
 
-### Start the app
+### Run the development sever
 
 ```
-npm start
+npm run dev
 ```
