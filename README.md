@@ -14,10 +14,10 @@ Automat is a step sequencer and synthesizer built using React and Reactronica. I
 
 ## Technologies Used
 
-React (Vite)
-Reactronica
-Tailwind CSS
-AWS Amplify
+- React (Vite)
+- Reactronica
+- Tailwind CSS
+- AWS Amplify
 
 ## Installation
 
@@ -30,7 +30,7 @@ git clone https://github.com/kad1kad/Automat.git
 ### Navigate to the repository
 
 ```
-cd [repository_name]
+cd Automat
 ```
 
 ### Install dependencies
