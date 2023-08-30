@@ -1,8 +1,8 @@
-#Automat: Step Sequencer and Synthesizer Web App
+# Automat: Step Sequencer and Synthesizer Web App
 
 Automat is a step sequencer and synthesizer built using React and Reactronica. It provides a user interface to design music sequences with various instruments and effects.
 
-##Features
+## Features
 
 - **Step Sequencing**: Add and remove notes to create sequences using a grid-based interface.
 - **Instrument Selection**: Switch between different synthesizers.
@@ -10,7 +10,7 @@ Automat is a step sequencer and synthesizer built using React and Reactronica. I
 - **BPM Adjustment**: Modify beats per minute (BPM) in real-time.
 - **Play & Stop Control**: Play the designed sequence or stop it.
 
-##Technologies Used
+## Technologies Used
 
 React (Vite)
 Reactronica
